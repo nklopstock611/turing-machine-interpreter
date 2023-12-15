@@ -22,6 +22,10 @@ It's important to note that after each complete instruction, there must be a new
 
 `? char label` := If on current position there is char, go to label.
 
+`S` := (Save)s a char.
+
+`G` := (Get)s the saved char.
+
 `HC` := (Head Currently) Prints the current position of the head.
 
 `FT` := (Full Tape) Prints the complete tape.
