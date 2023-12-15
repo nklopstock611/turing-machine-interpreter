@@ -55,6 +55,8 @@ P
 C label-go-to-x ; means, continue from label-go-to-x
 ```
 
+Be sure to write the "main" block of code first and then the labels, because the interpreter reads the code from top to bottom.
+
 #### Loops (move until):
 Use the `L` or `R` instruction with a char (like so `L '$'`) to indicate that the head has to move to the left or to the right until it finds that char.
 
