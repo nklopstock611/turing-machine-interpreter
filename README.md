@@ -1,5 +1,5 @@
 # turing-machine-interpreter
-Little interpreter for a Turing Machine like language.
+Interpreter for a little Turing Machine like language.
 
 It consists of a long tape and a head that can move to the left and to the right, and can write and read characters.
 
