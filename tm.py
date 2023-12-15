@@ -9,20 +9,28 @@ def run(tape: t.Tape, program: list, pointer: int):
         instruction = program[pointer]
 
         if instruction == 'L':
-            times = program[pointer + 1]
-            if times.isdigit():
-                for _ in range(int(times)):
+            if program[pointer + 2] == 'times':
+                times = program[pointer + 1]
+                if times.isdigit():
+                    for _ in range(int(times)):
+                        tape.left()
+                else:
                     tape.left()
-            else:
-                tape.left()
+            elif program[pointer + 2] == 'char':
+                char = program[pointer + 1]
+                tape.left_scan(char)
 
         elif instruction == 'R':
-            times = program[pointer + 1]
-            if times.isdigit():
-                for _ in range(int(times)):
+            if program[pointer + 2] == 'times':
+                times = program[pointer + 1]
+                if times.isdigit():
+                    for _ in range(int(times)):
+                        tape.right()
+                else:
                     tape.right()
-            else:
-                tape.right()
+            elif program[pointer + 2] == 'char':
+                char = program[pointer + 1]
+                tape.right_scan(char)
 
         elif instruction == 'W':
             if program[pointer + 1] == 'G':

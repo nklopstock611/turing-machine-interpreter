@@ -1,9 +1,9 @@
 HC
-R '4'
+R 4
 HC
 L
 HC
-R '2'
+R 2
 HC
 L
 HC

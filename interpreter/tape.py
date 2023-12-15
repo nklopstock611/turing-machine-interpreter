@@ -14,8 +14,32 @@ class Tape:
     def left(self):
         self.pointer -= 1
 
+    def left_scan(self, char):
+        found = False
+        for _ in reversed(range(0, self.pointer)):
+            if self.tape[self.pointer] == char:
+                found = True
+                break
+
+            self.left()
+
+        if found == False:
+            raise NameError('Character not found in tape when doing a left scan')
+
     def right(self):
         self.pointer += 1
+
+    def right_scan(self, char):
+        found = False
+        for _ in range(self.pointer, len(self.tape)):
+            if self.tape[self.pointer] == char:
+                found = True
+                break
+
+            self.right()
+
+        if found == False:
+            raise NameError('Character not found in tape when doing a right scan')
 
     def __str__(self):
         return str(self.tape)

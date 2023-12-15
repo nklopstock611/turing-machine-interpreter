@@ -5,9 +5,9 @@ It consists of a long tape and a head that can move to the left and to the right
 
 ## Instructions
 ### Main instructions:
-`L ['n']` := (Left) Move one position to the left. Optional param indicates how many "lefts" it moves.
+`L [n]` := (Left) Move one position to the left. Optional param indicates how many "lefts" it moves.
 
-`R ['n']` := (Right) Move one position to the right. Optional param indicates how many "rights" it moves.
+`R [n]` := (Right) Move one position to the right. Optional param indicates how many "rights" it moves.
 
 `W char` := (Write) char on current position.
 
@@ -40,10 +40,10 @@ Also, use the instruction `C label` to continue the execution from that label.
 
 Example:
 ```
-R '2'
+R 2
 P
 ? '#' label-go-to-x ; means, if on current position there is a '#' char, go to label-go-to-x
-R '3'
+R 3
 W '&'
 P
 HALT
@@ -52,5 +52,24 @@ label-go-to-x:
 R
 W '$'
 P
-C label-go-to-x ; means, continue to label-go-to-x
+C label-go-to-x ; means, continue from label-go-to-x
 ```
+
+#### Loops (move until):
+Use the `L` or `R` instruction with a char (like so `L '$'`) to indicate that the head has to move to the left or to the right until it finds that char.
+
+Example:
+```
+HC ; starts at 0
+R 4
+HC ; moves to 4
+W '$' ; writes '$' on 4
+P ; reads '$' on 4
+L 2
+HC ; moves to 2
+R '$'
+HC ; moves to 4, because the first '$' to the right was on 4
+P ; reads '$' on 4
+HALT
+```
+

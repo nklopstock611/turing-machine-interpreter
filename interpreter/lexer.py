@@ -40,11 +40,16 @@ def lexer(program_filepath):
 
         # check for instruction
         if line[0] == 'L' or line[0] == 'R':
-            # L '2' || R '2'
+            # L 2 || R 'A'
             program.append(line[0])
             if len(line) > 1:
-                # program.append(line[1])
-                program.append(line[2:-1])
+                if line[1] == "'":
+                    program.append(line[2:-1])
+                    program.append('char')
+                else:
+                    program.append(line[1:])
+                    program.append('times')
+
             token_counter += 1
 
         elif line[0] == 'W':
@@ -53,6 +58,7 @@ def lexer(program_filepath):
             if line[1] == "'":
                 program.append(line[2:-1])
             elif line[1] == 'G':
+                # W G
                 program.append(line[1])
 
             token_counter += 1
@@ -62,10 +68,12 @@ def lexer(program_filepath):
             program.append(line[0])
 
         elif line[0] == 'C':
+            # C label-go-to-x
             program.append(line[0])
             program.append(line[1:])
 
         elif line == 'S':
+            # S
             program.append(line[0])
 
         elif line[0] == '?':
@@ -77,12 +85,15 @@ def lexer(program_filepath):
             token_counter += 1
 
         elif line == 'HC':
+            # HC
             program.append(line)
 
         elif line == 'FT':
+            # FT
             program.append(line)
 
         elif line == 'HALT':
+            # HALT
             program.append(line)
 
     return (program, label_tracker, label_call_tracker)

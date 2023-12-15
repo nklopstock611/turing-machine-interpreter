@@ -1,9 +1,9 @@
 HC
-R '2'
+R 2
 HC
 P
 ? '#' label-go-to-x ; means, if on current position there is a '#' char...
-R '3'
+R 3
 HC
 W '&'
 P
