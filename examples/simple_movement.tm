@@ -1,5 +1,10 @@
+HC
 R '4'
+HC
 L
+HC
 R '2'
+HC
 L
+HC
 HALT

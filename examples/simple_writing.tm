@@ -1,4 +1,7 @@
+HC
 R '4'
+HC
 W '$'
 P
+FT
 HALT

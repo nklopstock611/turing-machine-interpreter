@@ -43,6 +43,12 @@ while program[pointer] != 'HALT':
 
     elif instruction == 'C':
         pointer = label_call_tracker[program[pointer + 1]]
+
+    elif instruction == 'HC':
+        print(tape.get_pointer())
+
+    elif instruction == 'FT':
+        print(tape.__str__())
         
     pointer += 1
 

@@ -5,6 +5,14 @@ def ignore_comments(line):
         
     return line
 
+def ignore_whitespaces(line):
+    return line.replace(' ', '')
+
+def ignore(line):
+    line = ignore_comments(line)
+    line = ignore_whitespaces(line)
+    return line
+
 def lexer(program_filepath):
     # reads file lines
     program_lines = []
@@ -31,42 +39,46 @@ def lexer(program_filepath):
         # check for instruction
         if line[0] == 'L' or line[0] == 'R':
             # L '2' || R '2'
-            line = ignore_comments(line)
+            line = ignore(line)
             program.append(line[0])
             if len(line) > 1:
                 # program.append(line[1])
-                program.append(line[3:-1])
+                program.append(line[2:-1])
             token_counter += 1
 
         elif line[0] == 'W':
             # W '$'
-            line = ignore_comments(line)
+            line = ignore(line)
             program.append(line[0])
-            # program.append(line[1])
-            program.append(line[3:-1])
+            program.append(line[2:-1])
             token_counter += 1
 
         elif line == 'P':
             # P
-            line = ignore_comments(line)
+            line = ignore(line)
             program.append(line[0])
 
         elif line[0] == '?':
             # ? '$' label-go-to-x
-            line = ignore_comments(line)
+            line = ignore(line)
             program.append(line[0])
-            # program.append(line[1])
-            program.append(line[3:4])
-            # program.append(line[5])
-            program.append(line[6:])
-            label_call_tracker[line[6:]] = token_counter
+            program.append(line[2:3])
+            program.append(line[4:])
+            label_call_tracker[line[4:]] = token_counter
             token_counter += 1
 
         elif line[0] == 'C':
-            line = ignore_comments(line)
+            line = ignore(line)
             program.append(line[0])
-            # program.append(line[1])
-            program.append(line[2:])
+            program.append(line[1:])
+
+        elif line == 'HC':
+            line = ignore(line)
+            program.append(line)
+
+        elif line == 'FT':
+            line = ignore(line)
+            program.append(line)
 
         elif line == 'HALT':
             line = ignore_comments(line)
