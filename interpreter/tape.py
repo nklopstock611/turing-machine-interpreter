@@ -15,3 +15,9 @@ class Tape:
 
     def right(self):
         self.pointer += 1
+
+    def __str__(self):
+        return str(self.tape)
+    
+    def get_pointer(self):
+        return self.pointer
