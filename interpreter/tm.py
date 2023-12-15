@@ -29,8 +29,6 @@ while program[pointer] != 'HALT':
         else:
             tape.right()
 
-        print(tape.get_pointer())
-
     elif instruction == 'W':
         tape.write(program[pointer + 1])
 
