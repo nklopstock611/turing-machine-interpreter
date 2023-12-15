@@ -22,9 +22,9 @@ It's important to note that after each complete instruction, there must be a new
 
 `? char label` := If on current position there is char, go to label.
 
-`HC` := (Head Currently) Print the current position of the head.
+`HC` := (Head Currently) Prints the current position of the head.
 
-`FT` := (Full Tape) Prints every value on the tape, currently.
+`FT` := (Full Tape) Prints the complete tape.
 
 `;` := Comment. Everything after `;` is ignored.
 
@@ -50,4 +50,3 @@ W '$'
 P
 C label-go-to-x ; means, continue to label-go-to-x
 ```
-
