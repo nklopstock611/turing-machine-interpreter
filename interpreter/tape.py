@@ -3,6 +3,7 @@ class Tape:
     def __init__(self, size):
         self.tape = ['#' for _ in range(size)]
         self.pointer = 0
+        self.g = '#'
 
     def read(self):
         return self.tape[self.pointer]
@@ -21,3 +22,9 @@ class Tape:
     
     def get_pointer(self):
         return self.pointer
+    
+    def set_g(self):
+        self.g = self.tape[self.pointer]
+
+    def get_g(self):
+        return self.g

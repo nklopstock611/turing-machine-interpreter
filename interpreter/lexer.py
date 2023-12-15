@@ -36,10 +36,11 @@ def lexer(program_filepath):
 
         token_counter += 1
 
+        line = ignore(line)
+
         # check for instruction
         if line[0] == 'L' or line[0] == 'R':
             # L '2' || R '2'
-            line = ignore(line)
             program.append(line[0])
             if len(line) > 1:
                 # program.append(line[1])
@@ -48,40 +49,40 @@ def lexer(program_filepath):
 
         elif line[0] == 'W':
             # W '$'
-            line = ignore(line)
             program.append(line[0])
-            program.append(line[2:-1])
+            if line[1] == "'":
+                program.append(line[2:-1])
+            elif line[1] == 'G':
+                program.append(line[1])
+
             token_counter += 1
 
         elif line == 'P':
             # P
-            line = ignore(line)
+            program.append(line[0])
+
+        elif line[0] == 'C':
+            program.append(line[0])
+            program.append(line[1:])
+
+        elif line == 'S':
             program.append(line[0])
 
         elif line[0] == '?':
             # ? '$' label-go-to-x
-            line = ignore(line)
             program.append(line[0])
             program.append(line[2:3])
             program.append(line[4:])
             label_call_tracker[line[4:]] = token_counter
             token_counter += 1
 
-        elif line[0] == 'C':
-            line = ignore(line)
-            program.append(line[0])
-            program.append(line[1:])
-
         elif line == 'HC':
-            line = ignore(line)
             program.append(line)
 
         elif line == 'FT':
-            line = ignore(line)
             program.append(line)
 
         elif line == 'HALT':
-            line = ignore_comments(line)
             program.append(line)
 
     return (program, label_tracker, label_call_tracker)
