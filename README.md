@@ -15,7 +15,7 @@ It consists of a long tape and a head that can move to the left and to the right
 
 `HALT` := Ends a *main* block. Every *main* block has to end with `HALT`.
 
-Every program consists of two blocks. The *main* block and the *label* block. The *main* block is where the code that will execute goes. The *label* block is where all the labels and its sequences go.
+Every program (could) consists of two blocks. The *main* block and the *label* block. The *main* block is where the code that will execute goes. The *label* block is where all the labels and its sequences go.
 
 ```
 ; main block:
