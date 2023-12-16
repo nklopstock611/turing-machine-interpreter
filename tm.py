@@ -63,9 +63,14 @@ def run(tape: t.Tape, program: list, pointer: int):
 
 if __name__ == '__main__':
     program_filepath = sys.argv[1]
+    # program_filepath = 'examples/condition_in_condition.tm'
 
     pointer = 0
     program, label_tracker, label_call_tracker = l.lexer(program_filepath)
     tape = t.Tape(256)
+
+    print(program)
+    print(label_tracker)
+    print(label_call_tracker)
 
     run(tape, program, pointer)

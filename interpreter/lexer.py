@@ -31,7 +31,8 @@ def lexer(program_filepath):
 
         # check for label
         if line[-1] == ':':
-            label_tracker[line[:-1]] = token_counter # saves the index of the label
+            label_tracker[line[:-1]] = token_counter - 1 # saves the index of the label
+            program.append('HALT')
             continue
 
         token_counter += 1
@@ -46,9 +47,15 @@ def lexer(program_filepath):
                 if line[1] == "'":
                     program.append(line[2:-1])
                     program.append('char')
+                    token_counter += 1
                 else:
                     program.append(line[1:])
                     program.append('times')
+                    token_counter += 1
+            else:
+                program.append('1')
+                program.append('times')
+                token_counter += 1
 
             token_counter += 1
 
@@ -57,9 +64,11 @@ def lexer(program_filepath):
             program.append(line[0])
             if line[1] == "'":
                 program.append(line[2:-1])
+                token_counter += 1
             elif line[1] == 'G':
                 # W G
                 program.append(line[1])
+                token_counter += 1
 
             token_counter += 1
 
@@ -71,17 +80,19 @@ def lexer(program_filepath):
             # C label-go-to-x
             program.append(line[0])
             program.append(line[1:])
+            token_counter += 1
 
         elif line == 'S':
             # S
             program.append(line[0])
+            # token_counter += 1
 
         elif line[0] == '?':
             # ? '$' label-go-to-x
             program.append(line[0])
             program.append(line[2:3])
             program.append(line[4:])
-            label_call_tracker[line[4:]] = token_counter
+            label_call_tracker[line[4:]] = token_counter - 1
             token_counter += 1
 
         elif line == 'HC':
@@ -91,9 +102,12 @@ def lexer(program_filepath):
         elif line == 'FT':
             # FT
             program.append(line)
+            token_counter += 1
 
-        elif line == 'HALT':
-            # HALT
-            program.append(line)
+        # elif line == 'HALT':
+        #     # HALT
+        #     program.append(line)
+
+    program.append('HALT')
 
     return (program, label_tracker, label_call_tracker)

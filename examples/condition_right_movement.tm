@@ -1,11 +1,11 @@
 HC ; 0
-R 4
-HC ; 4
+R 8
+HC ; 8
 W '$'
 P ; '$'
 L 2
-HC ; 2
+HC ; 6
 R '$'
-HC ; 4
+HC ; 8
 P ; '$'
 HALT
