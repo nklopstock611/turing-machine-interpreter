@@ -13,7 +13,24 @@ It consists of a long tape and a head that can move to the left and to the right
 
 `P` := (Print) (or, read) char on current position.
 
-`HALT` := End a label block or the full program. Every label block and every program has to end with `HALT`.
+`HALT` := Ends a *main* block. Every *main* block has to end with `HALT`.
+
+Every program consists of two blocks. The *main* block and the *label* block. The *main* block is where the code that will execute goes. The *label* block is where all the labels and its sequences go.
+
+```
+; main block:
+R 2
+? '#' label-main-block
+HALT
+
+; label block:
+label-main-block:
+W '$'
+P
+C label-main-block
+```
+
+Be sure to write the *main* block of code first and then the labels, because the interpreter reads the code from top to bottom.
 
 It's important to note that after each complete instruction, there must be a new line.
 
@@ -54,8 +71,6 @@ W '$'
 P
 C label-go-to-x ; means, continue from label-go-to-x
 ```
-
-Be sure to write the "main" block of code first and then the labels, because the interpreter reads the code from top to bottom.
 
 #### Loops (move until):
 Use the `L` or `R` instruction with a char (like so `L '$'`) to indicate that the head has to move to the left or to the right until it finds that char.
