@@ -50,6 +50,19 @@ It's important to note that after each complete instruction, there must be a new
 `;` := Comment. Everything after `;` is ignored.
 
 ### For a more modern feel
+#### Variables:
+Use the `S` instruction to save the char on the current position of the head. You can later get that char using the `G` instruction.
+
+Example:
+```
+W '$' ; writes '$' on 0
+S
+R 4
+W G ; writes '$' on 4
+P
+HALT 
+```
+
 #### Conditions:
 Use the instruction `? char label` to indicate conditions. Use a label to send the execution to that line, depending on the char condition.
 
