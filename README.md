@@ -103,3 +103,17 @@ P ; reads '$' on 4
 HALT
 ```
 
+## How to run
+Clone the repo or download the .zip file. Then, run the following command:
+
+```
+python tm.py examples/<.tm file>
+```
+
+You can add some additional arguments:
+
+`--h` := (Help) Prints the help message.
+
+`--tape-size` := (Tape Size) Sets the size of the tape. Default is 256.
+
+`--initial-state-char` := (Initial State Char) Sets the initial char of the tape. Default is '#'.

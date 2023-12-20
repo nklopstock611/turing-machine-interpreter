@@ -1,7 +1,7 @@
 class Tape:
 
-    def __init__(self, size):
-        self.tape = ['#' for _ in range(size)]
+    def __init__(self, size, char):
+        self.tape = [char for _ in range(size)]
         self.pointer = 0
         self.g = '#'
 

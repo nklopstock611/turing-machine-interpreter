@@ -1,4 +1,6 @@
 import sys
+import argparse
+import args as a
 
 import interpreter.tape as t
 import interpreter.lexer as l
@@ -61,11 +63,24 @@ def run(tape: t.Tape, program: list, pointer: int):
         pointer += 1
 
 if __name__ == '__main__':
-    program_filepath = sys.argv[1]
-    # program_filepath = 'examples/simple_condition.tm'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('program_filepath', help='The path to the program file')
+
+    # optional args
+    parser.add_argument('--h', action='store_true', help='Prints help message')
+    parser.add_argument('--tape-size', type=int, default=256, help='The size of the tape')
+    parser.add_argument('--initial-state-char', type=str, default='#', help='The initial state char of the tape')
+
+    args = parser.parse_args()
+
+    if args.h:
+        print(a.help())
+        sys.exit(0)
+
+    program_filepath = args.program_filepath
 
     pointer = 0
-    tape = t.Tape(256)
+    tape = t.Tape(args.tape_size, args.initial_state_char)
     try:
         program, label_tracker, label_call_tracker = l.program_array(program_filepath)
 
