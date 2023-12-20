@@ -1,7 +1,6 @@
 HC
 R 2
 HC
-P
 ? '#' label-go-to-x ; means, if there is a '#' char on current position, go to label-go-to-x
 R 3
 HC

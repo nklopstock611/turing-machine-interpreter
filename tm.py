@@ -5,7 +5,7 @@ import args as a
 import interpreter.tape as t
 import interpreter.lexer as l
 
-def run(tape: t.Tape, program: list, pointer: int):
+def run(tape: t.Tape, program: list, pointer: int, show_full_tape: bool = False):
     while program[pointer] != 'HALT':
         instruction = program[pointer]
 
@@ -60,6 +60,9 @@ def run(tape: t.Tape, program: list, pointer: int):
         elif instruction == 'FT':
             print(tape.__str__())
             
+        if show_full_tape and instruction in {'L', 'R', 'W'}:
+            tape.print_ft_on_current_position()
+        
         pointer += 1
 
 if __name__ == '__main__':
@@ -70,6 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('--h', action='store_true', help='Prints help message')
     parser.add_argument('--tape-size', type=int, default=256, help='The size of the tape')
     parser.add_argument('--initial-state-char', type=str, default='#', help='The initial state char of the tape')
+    parser.add_argument('--show-full-tape', action='store_true', help='Shows the full tape each intruction')
 
     args = parser.parse_args()
 
@@ -87,6 +91,6 @@ if __name__ == '__main__':
         # print(program)
         # print(label_tracker)
         # print(label_call_tracker)
-        run(tape, program, pointer)
+        run(tape, program, pointer, args.show_full_tape)
     except Exception as e:
         print(e)

@@ -5,6 +5,14 @@ class Tape:
         self.pointer = 0
         self.g = '#'
 
+    def __str__(self):
+        return str(self.tape)
+    
+    def print_ft_on_current_position(self):
+        self.tape[self.pointer] = [ self.tape[self.pointer] ]
+        print(self.__str__())
+        self.tape[self.pointer] = self.tape[self.pointer][0]
+
     def read(self):
         return self.tape[self.pointer]
     
@@ -40,9 +48,6 @@ class Tape:
 
         if found == False:
             raise NameError(f"Error: Character '{char}' not found in tape when doing a right scan")
-
-    def __str__(self):
-        return str(self.tape)
     
     def get_pointer(self):
         return self.pointer
