@@ -2,7 +2,7 @@ HC
 R 2
 HC
 P
-? '#' label-go-to-x ; means, if on current position there is a '#' char, go to label-go-to-x
+? '#' label-go-to-x ; means, if there is a '#' char on current position, go to label-go-to-x
 R 3
 HC
 W '&'
