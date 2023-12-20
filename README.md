@@ -9,9 +9,9 @@ It consists of a long tape and a head that can move to the left and to the right
 
 `R [n]` := (Right) Move one position to the right. Optional param indicates how many "rights" it moves.
 
-`W char` := (Write) char on current position.
+`W char` := (Write)s char on current position.
 
-`P` := (Print) (or, read) char on current position.
+`P` := (Print)s (or, reads) char on current position.
 
 `HALT` := Ends a *main* block. Every *main* block has to end with `HALT`.
 
@@ -35,9 +35,9 @@ Be sure to write the *main* block of code first and then the labels, because the
 It's important to note that after each complete instruction, there must be a new line.
 
 ### Extra instructions:
-`C label` := (Continue)s execution from where label was called.
+`C label` := (Continue)s execution where **label** was called.
 
-`? char label` := If on current position there is char, go to label.
+`? char label` := If on current position there is **char**, go to **label**.
 
 `S` := (Save)s a char.
 
@@ -66,13 +66,13 @@ HALT
 #### Conditions:
 Use the `? char label` instruction to indicate conditions. Use a label to send the execution to that line, depending on the char condition.
 
-Also, use the instruction `C label` to continue the execution from that label call.
+Also, use the `C label` instruction to continue the execution where **label** was called.
 
 Example:
 ```
 R 2
 P
-? '#' label-go-to-x ; means, if on current position there is a '#' char, go to label-go-to-x
+? '#' label-go-to-x ; means, if there is a '#' char on current position, go to label-go-to-x
 R 3
 W '&'
 P
@@ -82,7 +82,7 @@ label-go-to-x:
 R
 W '$'
 P
-C label-go-to-x ; means, continue from where label-go-to-x was called
+C label-go-to-x ; means, continue where label-go-to-x was called
 ```
 
 #### Loops (move until):
