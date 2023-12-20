@@ -24,7 +24,7 @@ class Tape:
             self.left()
 
         if found == False:
-            raise NameError(f"Character '{char}' not found in tape when doing a left scan")
+            raise NameError(f"Error: Character '{char}' not found in tape when doing a left scan")
 
     def right(self):
         self.pointer += 1
@@ -39,7 +39,7 @@ class Tape:
             self.right()
 
         if found == False:
-            raise NameError(f"Character '{char}' not found in tape when doing a right scan")
+            raise NameError(f"Error: Character '{char}' not found in tape when doing a right scan")
 
     def __str__(self):
         return str(self.tape)
@@ -51,4 +51,6 @@ class Tape:
         self.g = self.tape[self.pointer]
 
     def get_g(self):
+        if self.g == '#':
+            raise NameError(f"Error: G is not set")
         return self.g

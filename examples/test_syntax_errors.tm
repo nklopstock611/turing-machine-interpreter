@@ -5,6 +5,6 @@ HC
 HALT
 
 label:
-W '$'
+W '2'
 P
 C label

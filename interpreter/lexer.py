@@ -69,7 +69,7 @@ def program_array(program_filepath):
                     token_counter += 2
                 else:
                     if (line[1:].isdigit() == False):
-                        raise SyntaxError(f"Error at line {line_number} - L or R instruction's optional param must be a number or a char.")
+                        raise SyntaxError(f"Error at line {line_number} - L's or R's optional param must be a number or a char.")
                     
                     program.append(line[1:])
                     program.append('times')
@@ -90,10 +90,16 @@ def program_array(program_filepath):
                 # W G
                 program.append(line[1])
                 token_counter += 1
+            else:
+                raise SyntaxError(f"Error at line {line_number} - W's param must be a char or an assigned G instruction.")
 
         elif instruction == 'C':
             # C label-go-to-x
             program.append(instruction)
+            
+            if (line[1:] not in label_tracker):
+                raise SyntaxError(f"Error at line {line_number} - Label {line[1:]} not found.")
+            
             program.append(line[1:])
             token_counter += 2
 
