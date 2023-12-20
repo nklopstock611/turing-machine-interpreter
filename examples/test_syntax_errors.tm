@@ -1,4 +1,4 @@
-HC
+HC 1
 R 2
 HC
 ? '#' label

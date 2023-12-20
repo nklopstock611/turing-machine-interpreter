@@ -49,7 +49,6 @@ def run(tape: t.Tape, program: list, pointer: int):
         elif instruction == '?':
             if tape.read() == program[pointer + 1]:
                 pointer = label_tracker[program[pointer + 2]]
-                print(program[pointer])
             else:
                 pointer += 1
 
@@ -70,9 +69,9 @@ if __name__ == '__main__':
     try:
         program, label_tracker, label_call_tracker = l.program_array(program_filepath)
 
-        print(program)
-        print(label_tracker)
-        print(label_call_tracker)
+        # print(program)
+        # print(label_tracker)
+        # print(label_call_tracker)
         run(tape, program, pointer)
     except Exception as e:
         print(e)
