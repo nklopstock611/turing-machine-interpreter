@@ -96,8 +96,8 @@ def program_array(program_filepath):
         elif instruction == 'C':
             # C label-go-to-x
             program.append(instruction)
-            
-            if (line[1:] not in label_tracker):
+
+            if (line[1:] not in label_tracker or line[1:] not in label_call_tracker):
                 raise SyntaxError(f"Error at line {line_number} - Label {line[1:]} not found.")
             
             program.append(line[1:])
@@ -106,7 +106,12 @@ def program_array(program_filepath):
         elif instruction == '?':
             # ? '$' label-go-to-x
             program.append(instruction)
-            program.append(line[2:3])
+
+            if line[1] == "'" and line[3] == "'":
+                program.append(line[2:3])
+            else:
+                raise SyntaxError(f"Error at line {line_number} - ?'s first param must be a char.")
+            
             program.append(line[4:])
             token_counter += 3
             label_call_tracker[line[4:]] = token_counter - 1
