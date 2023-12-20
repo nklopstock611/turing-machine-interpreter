@@ -49,8 +49,8 @@ It's important to note that after each complete instruction, there must be a new
 
 `;` := Comment. Everything after `;` is ignored.
 
-### For a more modern feel
-#### Variables:
+## For a more modern feel
+### Variables:
 Use the `S` instruction to save the char on the current position of the head. You can later get that char using the `G` instruction.
 
 Example:
@@ -63,7 +63,7 @@ P
 HALT 
 ```
 
-#### Conditions:
+### Conditions:
 Use the `? char label` instruction to indicate conditions. Use a label to send the execution to that line, depending on the char condition.
 
 Also, use the `C label` instruction to continue the execution where **label** was called.
@@ -85,7 +85,7 @@ P
 C label-go-to-x ; means, continue where label-go-to-x was called
 ```
 
-#### Loops (move until):
+### Loops (move until):
 Use the `L` or `R` instruction with a char (like so `L '$'`) to indicate that the head has to move to the left or to the right until it finds that char.
 
 Example:
