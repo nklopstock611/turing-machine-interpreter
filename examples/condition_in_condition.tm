@@ -1,7 +1,7 @@
-HC
+HC ; 0
 R 2
-HC
-P
+HC ; 2
+P ; '#'
 ? '#' label-first-condition
 FT
 
@@ -9,16 +9,16 @@ HALT
 
 label-first-condition:
 W '$'
-P
-S
+P ; '$'
+S ; saves '$'
 L
-HC
+HC ; 1
 W G
-P
+P ; '$'
 ? '$' label-second-condition
 C label-first-condition
 
 label-second-condition:
 W '&'
-P
+P ; '&'
 C label-second-condition

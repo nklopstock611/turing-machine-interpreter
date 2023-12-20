@@ -68,6 +68,9 @@ def program_array(program_filepath):
                     program.append('char')
                     token_counter += 2
                 else:
+                    if (line[1:].isdigit() == False):
+                        raise SyntaxError(f"Error at line {line_number} - L or R instruction's optional param must be a number or a char.")
+                    
                     program.append(line[1:])
                     program.append('times')
                     token_counter += 2

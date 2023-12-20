@@ -1,8 +1,7 @@
 HC
-R '2'
+R 2
 HC
 ? '#' label
-
 HALT
 
 label:
