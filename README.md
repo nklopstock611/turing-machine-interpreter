@@ -35,7 +35,7 @@ Be sure to write the *main* block of code first and then the labels, because the
 It's important to note that after each complete instruction, there must be a new line.
 
 ### Extra instructions:
-`C label` := (Continue) execution from label.
+`C label` := (Continue)s execution from where label was called.
 
 `? char label` := If on current position there is char, go to label.
 
@@ -66,7 +66,7 @@ HALT
 #### Conditions:
 Use the instruction `? char label` to indicate conditions. Use a label to send the execution to that line, depending on the char condition.
 
-Also, use the instruction `C label` to continue the execution from that label.
+Also, use the instruction `C label` to continue the execution from that label call.
 
 Example:
 ```
@@ -82,7 +82,7 @@ label-go-to-x:
 R
 W '$'
 P
-C label-go-to-x ; means, continue from label-go-to-x
+C label-go-to-x ; means, continue from where label-go-to-x was called
 ```
 
 #### Loops (move until):
