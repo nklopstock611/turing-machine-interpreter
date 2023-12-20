@@ -2,7 +2,6 @@ import sys
 
 import interpreter.tape as t
 import interpreter.lexer as l
-# import parser as p
 
 def run(tape: t.Tape, program: list, pointer: int):
     while program[pointer] != 'HALT':
@@ -50,6 +49,7 @@ def run(tape: t.Tape, program: list, pointer: int):
         elif instruction == '?':
             if tape.read() == program[pointer + 1]:
                 pointer = label_tracker[program[pointer + 2]]
+                print(program[pointer])
             else:
                 pointer += 1
 
@@ -63,14 +63,16 @@ def run(tape: t.Tape, program: list, pointer: int):
 
 if __name__ == '__main__':
     program_filepath = sys.argv[1]
-    # program_filepath = 'examples/condition_in_condition.tm'
+    # program_filepath = 'examples/simple_condition.tm'
 
     pointer = 0
-    program, label_tracker, label_call_tracker = l.lexer(program_filepath)
     tape = t.Tape(256)
+    try:
+        program, label_tracker, label_call_tracker = l.program_array(program_filepath)
 
-    print(program)
-    print(label_tracker)
-    print(label_call_tracker)
-
-    run(tape, program, pointer)
+        print(program)
+        print(label_tracker)
+        print(label_call_tracker)
+        run(tape, program, pointer)
+    except Exception as e:
+        print(e)

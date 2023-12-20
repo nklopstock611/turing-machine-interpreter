@@ -13,7 +13,24 @@ def ignore(line):
     line = ignore_whitespaces(line)
     return line
 
-def lexer(program_filepath):
+def halt_label_index_difference(program_lines: list):
+    try:
+        index_halt = 0
+        index_label = 0
+        for line in program_lines:
+            if line != '':
+                if line[-1] == ':':
+                    break
+                index_label += 1
+                if line == 'HALT':
+                    break
+                index_halt += 1
+
+        return index_halt + 1 == index_label
+    except:
+        raise SyntaxError('Halting Error! - Seems you forgot to put a HALT instruction at the end of the main block.')
+
+def program_array(program_filepath):
     # reads file lines
     program_lines = []
     with open(program_filepath, 'r') as f:
@@ -23,45 +40,46 @@ def lexer(program_filepath):
     token_counter = 0
     label_tracker = {}
     label_call_tracker = {}
-    for line in program_lines:
-
+    for line_number, line in enumerate(program_lines, 1):
+        line = ignore(line)
+        
         # check for empty line
         if line == '':
             continue
 
+        instruction = line[0]
+
         # check for label
         if line[-1] == ':':
             label_tracker[line[:-1]] = token_counter - 1 # saves the index of the label
-            program.append('HALT')
             continue
 
-        token_counter += 1
-
-        line = ignore(line)
-
-        # check for instruction
-        if line[0] == 'L' or line[0] == 'R':
+        if instruction == 'L' or instruction == 'R':
             # L 2 || R 'A'
-            program.append(line[0])
-            if len(line) > 1:
+            program.append(instruction)
+            token_counter += 1
+            if len(line) > 1:       
+
+                if (line[1] == "'" or line[-1] == "'") and line.count("'") != 2:
+                    raise SyntaxError(f"Error at line {line_number} - Seems you forgot a \' on L or R instruction.")
+
                 if line[1] == "'":
                     program.append(line[2:-1])
                     program.append('char')
-                    token_counter += 1
+                    token_counter += 2
                 else:
                     program.append(line[1:])
                     program.append('times')
-                    token_counter += 1
+                    token_counter += 2
             else:
                 program.append('1')
                 program.append('times')
-                token_counter += 1
+                token_counter += 2
 
-            token_counter += 1
-
-        elif line[0] == 'W':
+        elif instruction == 'W':
             # W '$'
-            program.append(line[0])
+            program.append(instruction)
+            token_counter += 1
             if line[1] == "'":
                 program.append(line[2:-1])
                 token_counter += 1
@@ -70,44 +88,36 @@ def lexer(program_filepath):
                 program.append(line[1])
                 token_counter += 1
 
-            token_counter += 1
-
-        elif line == 'P':
-            # P
-            program.append(line[0])
-
-        elif line[0] == 'C':
+        elif instruction == 'C':
             # C label-go-to-x
-            program.append(line[0])
+            program.append(instruction)
             program.append(line[1:])
-            token_counter += 1
+            token_counter += 2
 
-        elif line == 'S':
-            # S
-            program.append(line[0])
-            # token_counter += 1
-
-        elif line[0] == '?':
+        elif instruction == '?':
             # ? '$' label-go-to-x
-            program.append(line[0])
+            program.append(instruction)
             program.append(line[2:3])
             program.append(line[4:])
+            token_counter += 3
             label_call_tracker[line[4:]] = token_counter - 1
-            token_counter += 1
 
-        elif line == 'HC':
-            # HC
-            program.append(line)
-
-        elif line == 'FT':
-            # FT
+        elif line == 'HC' or line == 'P' or line == 'S' or line == 'FT' or line == 'HALT':
             program.append(line)
             token_counter += 1
+            continue
 
-        # elif line == 'HALT':
-        #     # HALT
-        #     program.append(line)
+        else:
+            raise SyntaxError(f"Error at line {line_number} - Not a valid instruction.")
 
-    program.append('HALT')
+    if halt_label_index_difference(program_lines) == False:
+        raise SyntaxError('Halting Error! - Seems you forgot to put a HALT instruction at the end of the main block.')
 
     return (program, label_tracker, label_call_tracker)
+
+
+
+
+
+
+
