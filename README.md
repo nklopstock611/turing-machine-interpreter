@@ -118,7 +118,7 @@ You can add some additional arguments:
 
 `--initial-state-char` := (Initial State Char) Sets the initial char of the tape. Default is '#'.
 
-`--show-full-tape` := (Show Full Tape) Prints the complete tape after each instruction of the program is executed. Default is False.
+`--show-full-tape` := (Show Full Tape) Prints the complete tape after each instruction of the program is executed. The current position of the head is indicated by '[ ]'. Default is False.
 
 Example:
 ```
