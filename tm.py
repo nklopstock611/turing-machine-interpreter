@@ -87,7 +87,7 @@ if __name__ == '__main__':
     tape = t.Tape(args.tape_size, args.initial_state_char)
     try:
         if program_filepath[-3:] != '.tm':
-            raise NameError(f"Error: Program file must have the .tm extension")
+            raise FileNotFoundError(f"Error: Program file must have the .tm extension")
 
         program, label_tracker, label_call_tracker = l.program_array(program_filepath)
 
@@ -95,6 +95,8 @@ if __name__ == '__main__':
     except SyntaxError as e:
         print(e)
     except NameError as e:
+        print(e)
+    except FileNotFoundError as e:
         print(e)
     except IndexError as e:
         print(f"Error: The tape is not long enough to execute the program.")
