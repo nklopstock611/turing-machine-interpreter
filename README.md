@@ -117,3 +117,8 @@ You can add some additional arguments:
 `--tape-size` := (Tape Size) Sets the size of the tape. Default is 256.
 
 `--initial-state-char` := (Initial State Char) Sets the initial char of the tape. Default is '#'.
+
+Example:
+```
+python tm.py examples/simple_condition.tm --tape-size 10 --initial-state-char '0'
+```
