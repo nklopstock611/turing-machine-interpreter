@@ -64,7 +64,7 @@ HALT
 ```
 
 #### Conditions:
-Use the instruction `? char label` to indicate conditions. Use a label to send the execution to that line, depending on the char condition.
+Use the `? char label` instruction to indicate conditions. Use a label to send the execution to that line, depending on the char condition.
 
 Also, use the instruction `C label` to continue the execution from that label call.
 
