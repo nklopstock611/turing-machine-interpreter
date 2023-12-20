@@ -73,7 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('--h', action='store_true', help='Prints help message')
     parser.add_argument('--tape-size', type=int, default=256, help='The size of the tape')
     parser.add_argument('--initial-state-char', type=str, default='#', help='The initial state char of the tape')
-    parser.add_argument('--show-full-tape', action='store_true', help='Shows the full tape each intruction')
+    parser.add_argument('--show-full-tape', action='store_true', help='Shows the full tape (and the head position) after each intruction')
 
     args = parser.parse_args()
 
@@ -86,11 +86,15 @@ if __name__ == '__main__':
     pointer = 0
     tape = t.Tape(args.tape_size, args.initial_state_char)
     try:
+        if program_filepath[-3:] != '.tm':
+            raise NameError(f"Error: Program file must have the .tm extension")
+
         program, label_tracker, label_call_tracker = l.program_array(program_filepath)
 
-        # print(program)
-        # print(label_tracker)
-        # print(label_call_tracker)
         run(tape, program, pointer, args.show_full_tape)
-    except Exception as e:
+    except SyntaxError as e:
         print(e)
+    except NameError as e:
+        print(e)
+    except IndexError as e:
+        print(f"Error: The tape is not long enough to execute the program.")
