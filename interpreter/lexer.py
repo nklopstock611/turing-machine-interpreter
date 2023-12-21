@@ -1,7 +1,7 @@
 def ignore_comments(line):
-    for each_char in line:
+    for index, each_char in enumerate(line):
         if each_char == ';':
-            return line[:line.index(';') - 1]
+            return line[:line.index(';')]
         
     return line
 
