@@ -114,13 +114,20 @@ You can add some additional arguments:
 
 `--h` := (Help) Prints the help message.
 
-`--tape-size` := (Tape Size) Sets the size of the tape. Default is 256.
+`--tape-size <size>` := (Tape Size) Sets the size of the tape. Default is 256.
 
-`--initial-state-char` := (Initial State Char) Sets the initial char of the tape. Default is '#'.
+`--initial-state-char "<char>"` := (Initial State Char) Sets the initial char of the tape. Default is '#'.
 
 `--show-full-tape` := (Show Full Tape) Prints the complete tape after each instruction of the program is executed. The current position of the head is indicated by '[ ]'. Default is False.
 
+`--string "<string>"` := (String) If you want to pass a string to the program, use this argument. The string will be saved on the tape, starting on position 0.
+
 Example:
 ```
-python tm.py examples/simple_condition.tm --tape-size 10 --initial-state-char '0' --show-full-tape
+python tm.py examples/simple-instructions/simple_condition.tm --tape-size 10 --initial-state-char '0' --show-full-tape
+```
+
+Example for string evaluation:
+```
+python tm.py examples/deterministic-turing-machine/zero_one_star.tm --tape-size 10 --show-full-tape --string "0101"
 ```

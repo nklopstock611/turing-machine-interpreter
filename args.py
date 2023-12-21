@@ -34,3 +34,12 @@ def help():
     """
 
     return help_text
+
+def string(string):
+    program = []
+    for each_char in string:
+        program.append('W')
+        program.append(each_char)
+        program.append('R')
+
+    return program

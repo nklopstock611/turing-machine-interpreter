@@ -13,6 +13,10 @@ class Tape:
         print(self.__str__())
         self.tape[self.pointer] = self.tape[self.pointer][0]
 
+    def string_to_evaluate(self, string):
+        for i in range(len(string)):
+            self.tape[i] = string[i]
+
     def read(self):
         return self.tape[self.pointer]
     

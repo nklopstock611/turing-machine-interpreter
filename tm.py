@@ -2,10 +2,10 @@ import sys
 import argparse
 import args as a
 
-import interpreter.tape as t
+from interpreter.tape import Tape
 import interpreter.lexer as l
 
-def run(tape: t.Tape, program: list, pointer: int, show_full_tape: bool = False):
+def run(tape: Tape, program: list, pointer: int, show_full_tape: bool = False):
     while program[pointer] != 'HALT':
         instruction = program[pointer]
 
@@ -74,6 +74,7 @@ if __name__ == '__main__':
     parser.add_argument('--tape-size', type=int, default=256, help='The size of the tape')
     parser.add_argument('--initial-state-char', type=str, default='#', help='The initial state char of the tape')
     parser.add_argument('--show-full-tape', action='store_true', help='Shows the full tape (and the head position) after each intruction')
+    parser.add_argument('--string', nargs='?', const='', help='The string that will be evaluated')
 
     args = parser.parse_args()
 
@@ -84,12 +85,15 @@ if __name__ == '__main__':
     program_filepath = args.program_filepath
 
     pointer = 0
-    tape = t.Tape(args.tape_size, args.initial_state_char)
+    tape = Tape(args.tape_size, args.initial_state_char)
     try:
         if program_filepath[-3:] != '.tm':
             raise FileNotFoundError(f"Error: Program file must have the .tm extension")
 
         program, label_tracker, label_call_tracker = l.program_array(program_filepath)
+
+        if args.string:
+            tape.string_to_evaluate(args.string)
 
         run(tape, program, pointer, args.show_full_tape)
 

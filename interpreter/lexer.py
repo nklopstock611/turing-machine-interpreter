@@ -19,13 +19,14 @@ def halt_label_index_difference(program_lines: list):
         index_label = 0
         for line in program_lines:
             if line != '':
-                if line[-1] == ':':
-                    break
-                index_label += 1
-                if line == 'HALT':
-                    break
-                index_halt += 1
-
+                if line[0] != ';':
+                    if line[-1] == ':':
+                        break
+                    index_label += 1
+                    if line == 'HALT':
+                        break
+                    index_halt += 1
+        
         return index_halt + 1 == index_label
     except:
         raise SyntaxError('Halting Error! - Seems you forgot to put a HALT instruction at the end of the main block.')
@@ -35,6 +36,9 @@ def program_array(program_filepath):
     program_lines = []
     with open(program_filepath, 'r') as f:
         program_lines = [line.strip() for line in f.readlines()]
+
+    if halt_label_index_difference(program_lines) == False:
+        raise SyntaxError('Halting Error! - Seems you forgot to put a HALT instruction at the end of the main block.')
 
     program = []
     token_counter = 0
@@ -123,9 +127,6 @@ def program_array(program_filepath):
 
         else:
             raise SyntaxError(f"Error at line {line_number} - Not a valid instruction.")
-
-    if halt_label_index_difference(program_lines) == False:
-        raise SyntaxError('Halting Error! - Seems you forgot to put a HALT instruction at the end of the main block.')
 
     return (program, label_tracker, label_call_tracker)
 
