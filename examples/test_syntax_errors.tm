@@ -1,9 +1,11 @@
 HC 1
-R 2'
+R k
 HC
-? '# label
+? '#' label
+
+HALT
 
 label:
-W $
+W $e'
 P
 C label
