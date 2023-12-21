@@ -26,11 +26,11 @@ W '#'
 P ; '#'
 L 4
 HC ; 0
-C label-usd-sign
+TO label-usd-sign
 
 label-ampersand:
 W '#'
 P ; '#'
 L 4
 HC ; 1
-C label-ampersand
+TO label-ampersand

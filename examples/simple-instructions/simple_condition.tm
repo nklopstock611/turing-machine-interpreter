@@ -13,4 +13,4 @@ R
 HC
 W '$'
 P
-C label-go-to-x ; means, continue execution from where label-go-to-x was called
+TO label-go-to-x ; means, continue execution from where label-go-to-x was called

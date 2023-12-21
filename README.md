@@ -27,7 +27,7 @@ HALT
 label-main-block:
 W '$'
 P
-C label-main-block
+TO label-main-block
 ```
 
 Be sure to write the *main* block of code first and then the labels, because the interpreter reads the code from top to bottom.
@@ -35,13 +35,15 @@ Be sure to write the *main* block of code first and then the labels, because the
 It's important to note that after each complete instruction, there must be a new line.
 
 ### Extra instructions:
-`C label` := (Continue)s execution where **label** was called.
+`TO label` := Continues the execution where **label** was called.
 
 `? char label` := If on current position there is **char**, go to **label**.
 
 `S` := (Save)s a char.
 
 `G` := (Get)s the saved char.
+
+`C string` := (Call)s another Turing Machine. The string is the path to the file where the other Turing Machine is.
 
 `HC` := (Head Currently) Prints the current position of the head.
 
@@ -66,7 +68,7 @@ HALT
 ### Conditions:
 Use the `? char label` instruction to indicate conditions. Use a label to send the execution to that line, depending on the char condition.
 
-Also, use the `C label` instruction to continue the execution where **label** was called.
+Also, use the `TO label` instruction to continue the execution where **label** was called.
 
 Example:
 ```
@@ -82,7 +84,7 @@ label-go-to-x:
 R
 W '$'
 P
-C label-go-to-x ; means, continue where label-go-to-x was called
+TO label-go-to-x ; means, continue where label-go-to-x was called
 ```
 
 ### Loops (move until):

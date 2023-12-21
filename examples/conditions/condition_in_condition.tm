@@ -16,9 +16,9 @@ HC ; 1
 W G
 P ; '$'
 ? '$' label-second-condition
-C label-first-condition
+TO label-first-condition
 
 label-second-condition:
 W '&'
 P ; '&'
-C label-second-condition
+TO label-second-condition

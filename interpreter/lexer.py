@@ -107,14 +107,14 @@ def program_array(program_filepath):
             else:
                 raise SyntaxError(f"Error at line {line_number} - W's param must be a char or an assigned G instruction.")
 
-        elif instruction == 'C':
-            # C label-go-to-x
-            program.append(instruction)
+        elif line[:2] == 'TO':
+            # TO label-go-to-x
+            program.append(line[:2])
 
-            if (line[1:] not in label_tracker or line[1:] not in label_call_tracker):
-                raise SyntaxError(f"Error at line {line_number} - Label {line[1:]} not found.")
+            if (line[2:] not in label_tracker or line[2:] not in label_call_tracker):
+                raise SyntaxError(f"Error at line {line_number} - Label {line[2:]} not found.")
             
-            program.append(line[1:])
+            program.append(line[2:])
             token_counter += 2
 
         elif instruction == '?':

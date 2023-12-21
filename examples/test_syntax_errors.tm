@@ -8,4 +8,4 @@ HALT
 label:
 W $e'
 P
-C label
+TO label

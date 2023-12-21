@@ -42,7 +42,7 @@ def run(tape: Tape, program: list, pointer: int, show_full_tape: bool = False):
         elif instruction == 'P':
             print(tape.read())
 
-        elif instruction == 'C':
+        elif instruction == 'TO':
             pointer = label_call_tracker[program[pointer + 1]]
 
         elif instruction == 'S':
@@ -86,7 +86,12 @@ if __name__ == '__main__':
 
     pointer = 0
     tape = Tape(args.tape_size, args.initial_state_char)
+
     try:
+
+        if args.show_full_tape:
+            print(tape.__str__())
+        
         if program_filepath[-3:] != '.tm':
             raise FileNotFoundError(f"Error: Program file must have the .tm extension")
 
@@ -96,10 +101,6 @@ if __name__ == '__main__':
             tape.string_to_evaluate(args.string)
 
         run(tape, program, pointer, args.show_full_tape)
-
-        if args.show_full_tape:
-            print(tape.__str__())
-        
     except SyntaxError as e:
         print(e)
     except NameError as e:
