@@ -21,21 +21,19 @@ HALT
 evaluation:
 R
 ? '1' q1
+C evaluation
 
 q1:
 R
 ? '0' q2
 ? '#' accept
+C evaluation
 
 q2:
 R
 ? '1' q1
-? '#' reject
+C evaluation
 
 accept:
 W 'A'
-C evaluation
-
-reject:
-W 'R'
 C evaluation
