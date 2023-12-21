@@ -92,6 +92,10 @@ if __name__ == '__main__':
         program, label_tracker, label_call_tracker = l.program_array(program_filepath)
 
         run(tape, program, pointer, args.show_full_tape)
+
+        if args.show_full_tape:
+            print(tape.__str__())
+        
     except SyntaxError as e:
         print(e)
     except NameError as e:
