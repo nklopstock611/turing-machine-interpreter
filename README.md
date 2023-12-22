@@ -131,5 +131,5 @@ python tm.py examples/simple-instructions/simple_condition.tm --tape-size 10 --i
 
 Example for string evaluation:
 ```
-python tm.py examples/deterministic-turing-machines/zero_one_star.tm --tape-size 10 --show-full-tape --string "0101"
+python tm.py examples/deterministic-turing-machines/zero-one-star/zero_one_star.tm --tape-size 10 --show-full-tape --string "0101"
 ```
