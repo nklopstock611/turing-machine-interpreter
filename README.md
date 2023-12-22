@@ -35,9 +35,9 @@ Be sure to write the *main* block of code first and then the labels, because the
 It's important to note that after each complete instruction, there must be a new line.
 
 ### Extra instructions:
-`TO label` := Continues the execution where **label** was called.
-
 `? char label` := If on current position there is **char**, go to **label**.
+
+`TO label` := Continues the execution where **label** was called.
 
 `S` := (Save)s a char.
 
