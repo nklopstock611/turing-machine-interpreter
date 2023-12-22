@@ -17,27 +17,29 @@
 ; or use the argument on the terimal --string "0101"
 
 ; evaluation starts
-? '#' accept
-? '0' evaluation
 
+; accepts empty string
+? '#' accept
+
+? '0' q2 ; first transition
+
+? '#' halt ; end of string
 HALT
 
-evaluation:
-R
-? '1' q1
-TO evaluation
+halt:
+TO halt
 
 q1:
 R
 ? '0' q2
 ? '#' accept
-TO evaluation
+TO halt
 
 q2:
 R
 ? '1' q1
-TO evaluation
+TO halt
 
 accept:
 W 'A'
-TO evaluation
+TO halt

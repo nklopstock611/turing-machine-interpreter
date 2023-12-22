@@ -3,30 +3,33 @@
 ; examples reject: "0100", "0"
 
 ; evaluation starts
+
+; accepts empty string
 ? '#' accept
+
+; two possible starting transitions
 ? '1' q1
 ? '0' q2
 
-? '#' end
-
+? '#' halt ; end of string
 HALT
 
-end:
-TO end
+halt:
+TO halt
 
 q1:
 R
 ? '0' q2
 ? '1' q1
 ? '#' accept
-TO end
+TO halt
 
 q2:
 R
 ? '1' q2
 ? '0' q1
-TO end
+TO halt
 
 accept:
 W 'A'
-TO end
+TO halt
