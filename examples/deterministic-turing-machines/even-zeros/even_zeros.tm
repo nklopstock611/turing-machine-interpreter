@@ -2,6 +2,19 @@
 ; examples accept: "1001", ""
 ; examples reject: "0100", "0"
 
+; writes word to evaluate
+; you can write it in the main program, like this:
+; W '1'
+; R
+; W '0'
+; R
+; W '0'
+; R
+; W '1'
+; FT
+; L 3
+; or use the argument on the terimal --string "1001"
+
 ; evaluation starts
 
 ; accepts empty string
