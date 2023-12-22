@@ -1,5 +1,4 @@
-; Deterministic Turing Machine that recognizes the language
-; L = (01)*
+; Deterministic Turing Machine that recognizes the language that follows the regular expression (01)*
 ; examples accept: "0101", ""
 ; examples reject: "010", "0"
 
