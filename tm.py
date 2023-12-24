@@ -5,7 +5,7 @@ import args as a
 from interpreter.tape import Tape
 import interpreter.lexer as l
 
-def run(tape: Tape, program: list, pointer: int, show_full_tape: bool = False):
+def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict, pointer: int, show_full_tape: bool = False):
     while program[pointer] != 'HALT':
         instruction = program[pointer]
 
@@ -41,6 +41,11 @@ def run(tape: Tape, program: list, pointer: int, show_full_tape: bool = False):
 
         elif instruction == 'P':
             print(tape.read())
+
+        elif instruction == 'C':
+            c_filepath = program[pointer + 1]
+            c_program, c_label_tracker, c_label_call_tracker = l.program_array(c_filepath)
+            run(tape, c_program, c_label_tracker, c_label_call_tracker, 0, show_full_tape)
 
         elif instruction == 'TO':
             pointer = label_call_tracker[program[pointer + 1]]
@@ -90,13 +95,14 @@ if __name__ == '__main__':
     try:
         if program_filepath[-3:] != '.tm':
             raise FileNotFoundError(f"Error: Program file must have the .tm extension")
+        # program_filepath = 'examples/simple-instructions/simple_tm_call.tm'
 
         program, label_tracker, label_call_tracker = l.program_array(program_filepath)
 
         if args.string:
             tape.string_to_evaluate(args.string)
 
-        run(tape, program, pointer, args.show_full_tape)
+        run(tape, program, label_tracker, label_call_tracker, pointer, args.show_full_tape)
 
         if args.show_full_tape:
             print(tape.__str__())
@@ -106,6 +112,7 @@ if __name__ == '__main__':
     except NameError as e:
         print(e)
     except FileNotFoundError as e:
+        print('Error: File not found.')
         print(e)
     except IndexError as e:
         print(f"Error: The tape is not long enough to execute the program.")

@@ -37,9 +37,6 @@ def program_array(program_filepath):
     with open(program_filepath, 'r') as f:
         program_lines = [line.strip() for line in f.readlines()]
 
-    if halt_label_index_difference(program_lines) == False:
-        raise SyntaxError('Halting Error! - Seems you forgot to put a HALT instruction at the end of the main block.')
-
     program = []
     token_counter = 0
     label_tracker = {}
@@ -54,7 +51,7 @@ def program_array(program_filepath):
         instruction = line[0]
 
         # check for label
-        if line[-1] == ':':
+        if line[-1] == ':' and line[0] != '?':
             label_tracker[line[:-1]] = token_counter - 1 # saves the index of the label
             continue
 
@@ -107,6 +104,18 @@ def program_array(program_filepath):
             else:
                 raise SyntaxError(f"Error at line {line_number} - W's param must be a char or an assigned G instruction.")
 
+        elif instruction == 'C':
+            # C "examples/simple-instructions/simple_get.tm"
+
+            if (line[1] == '"' or line[-1] == '"'):
+                if line.count('"') != 2:
+                    raise SyntaxError(f"Error at line {line_number} - Seems you forgot a \" on C instruction.")
+    
+            program.append(instruction)
+            token_counter += 1
+            program.append(line[2:-1])
+            token_counter += 1
+
         elif line[:2] == 'TO':
             # TO label-go-to-x
             program.append(line[:2])
@@ -119,17 +128,19 @@ def program_array(program_filepath):
 
         elif instruction == '?':
             # ? '$' label-go-to-x
-
             program.append(instruction)
 
             if line[1] == "'" and line[3] == "'":
                 program.append(line[2:3])
             else:
                 raise SyntaxError(f"Error at line {line_number} - ?'s first param must be a char.")
-            
-            program.append(line[4:])
-            token_counter += 3
-            label_call_tracker[line[4:]] = token_counter - 1
+
+            if line[-1] not in {'.', ',', "'", '"', '(', ')', '[', ']', '{', '}', '?', ':', ';', '*', '/', '+', '-', '=', '<', '>', '!', '&', '|', '^', '%', '@', '#', '~', '`', '$', ' '}:
+                program.append(line[4:])
+                token_counter += 3
+                label_call_tracker[line[4:]] = token_counter - 1
+            else:
+                raise SyntaxError(f"Error at line {line_number} - ?'s second param can't have special characters.")
 
         elif line == 'HC' or line == 'P' or line == 'S' or line == 'FT' or line == 'HALT':
             program.append(line)
@@ -138,6 +149,9 @@ def program_array(program_filepath):
 
         else:
             raise SyntaxError(f"Error at line {line_number} - Not a valid instruction.")
+        
+    if halt_label_index_difference(program_lines) == False:
+        raise SyntaxError('Halting Error! - Seems you forgot to put a HALT instruction at the end of the main block.')
 
     return (program, label_tracker, label_call_tracker)
 
