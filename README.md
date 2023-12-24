@@ -43,7 +43,7 @@ It's important to note that after each complete instruction, there must be a new
 
 `G` := (Get)s the saved char.
 
-`C string` := (Call)s another Turing Machine. The string is the path to the file where the other Turing Machine is.
+`C string` := (Call)s another Turing Machine. **String** is the path to the file where the other Turing Machine is.
 
 `HC` := (Head Currently) Prints the current position of the head.
 
