@@ -20,6 +20,9 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
             elif program[pointer + 2] == 'char':
                 char = program[pointer + 1]
                 tape.left_scan(char)
+            elif program[pointer + 2] == 'not_char':
+                char = program[pointer + 1]
+                tape.left_scan_not(char)
 
         elif instruction == 'R':
             if program[pointer + 2] == 'times':
@@ -32,6 +35,9 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
             elif program[pointer + 2] == 'char':
                 char = program[pointer + 1]
                 tape.right_scan(char)
+            elif program[pointer + 2] == 'not_char':
+                char = program[pointer + 1]
+                tape.right_scan_not(char)
 
         elif instruction == 'W':
             if program[pointer + 1] == 'G':
@@ -92,20 +98,22 @@ if __name__ == '__main__':
     pointer = 0
     tape = Tape(args.tape_size, args.initial_state_char)
 
+    if program_filepath[-3:] != '.tm':
+        raise FileNotFoundError(f"Error: Program file must have the .tm extension")
+    # program_filepath = 'examples/simple-instructions/simple_tm_call.tm'
+
+    program, label_tracker, label_call_tracker = l.program_array(program_filepath)
+
+    if args.string:
+        tape.string_to_evaluate(args.string)
+
+    run(tape, program, label_tracker, label_call_tracker, pointer, args.show_full_tape)
+
+    if args.show_full_tape:
+        print(tape.__str__())
+
     try:
-        if program_filepath[-3:] != '.tm':
-            raise FileNotFoundError(f"Error: Program file must have the .tm extension")
-        # program_filepath = 'examples/simple-instructions/simple_tm_call.tm'
-
-        program, label_tracker, label_call_tracker = l.program_array(program_filepath)
-
-        if args.string:
-            tape.string_to_evaluate(args.string)
-
-        run(tape, program, label_tracker, label_call_tracker, pointer, args.show_full_tape)
-
-        if args.show_full_tape:
-            print(tape.__str__())
+        print(f"Loading program from {program_filepath}...")
             
     except SyntaxError as e:
         print(e)

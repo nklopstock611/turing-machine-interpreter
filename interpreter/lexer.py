@@ -61,7 +61,16 @@ def program_array(program_filepath):
             token_counter += 1
             if len(line) > 1:       
 
-                if (line[1] == "'" or line[-1] == "'"):
+                if line[1] == '!':
+                    if (line[2] == "'" or line[-1] == "'"):
+                        if line.count("'") != 2:
+                            raise SyntaxError(f"Error at line {line_number} - Seems you forgot a \' on L or R instruction.")
+                        elif len(line[3:-1]) != 1:
+                            raise SyntaxError(f"Error at line {line_number} - L's or R's optional param must be a number or a char.")
+                    else:
+                        if (line[1:].isdigit() == False):
+                            raise SyntaxError(f"Error at line {line_number} - L's or R's optional param must be a number or a char.")
+                elif (line[1] == "'" or line[-1] == "'"):
                     if line.count("'") != 2:
                         raise SyntaxError(f"Error at line {line_number} - Seems you forgot a \' on L or R instruction.")
                     elif len(line[2:-1]) != 1:
@@ -73,6 +82,10 @@ def program_array(program_filepath):
                 if line[1] == "'":
                     program.append(line[2:-1])
                     program.append('char')
+                    token_counter += 2
+                elif line[1] == '!':
+                    program.append(line[3:-1])
+                    program.append('not_char')
                     token_counter += 2
                 else:
                     program.append(line[1:])

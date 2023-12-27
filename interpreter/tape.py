@@ -28,7 +28,7 @@ class Tape:
 
     def left_scan(self, char):
         found = False
-        for _ in reversed(range(0, self.pointer)):
+        for _ in reversed(range(-1, self.pointer)):
             if self.tape[self.pointer] == char:
                 found = True
                 break
@@ -36,7 +36,19 @@ class Tape:
             self.left()
 
         if found == False:
-            raise SyntaxError(f"Error: Character '{char}' not found in tape when doing a left scan")
+            raise SyntaxError(f"Error: Character '{char}' not found in tape when doing a left scan.")
+
+    def left_scan_not(self, char):
+        found = False
+        for _ in reversed(range(-1, self.pointer)):
+            if self.tape[self.pointer] != char:
+                found = True
+                break
+
+            self.left()
+
+        if found == False:
+            raise SyntaxError(f"Error: The tape is full of '{char}' to the left.")
 
     def right(self):
         self.pointer += 1
@@ -51,8 +63,20 @@ class Tape:
             self.right()
 
         if found == False:
-            raise SyntaxError(f"Error: Character '{char}' not found in tape when doing a right scan")
+            raise SyntaxError(f"Error: Character '{char}' not found in tape when doing a right scan.")
     
+    def right_scan_not(self, char):
+        found = False
+        for _ in range(self.pointer, len(self.tape)):
+            if self.tape[self.pointer] != char:
+                found = True
+                break
+
+            self.right()
+
+        if found == False:
+            raise SyntaxError(f"Error: The tape is full of '{char}' to the right.")
+
     def get_pointer(self):
         return self.pointer
     
@@ -61,5 +85,5 @@ class Tape:
 
     def get_g(self):
         if self.g == '#':
-            raise NameError(f"Error: G is not set")
+            raise NameError(f"Error: G is not set.")
         return self.g
