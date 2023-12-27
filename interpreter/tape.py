@@ -40,6 +40,7 @@ class Tape:
 
     def left_scan_not(self, char):
         found = False
+        self.left()
         for _ in reversed(range(-1, self.pointer)):
             if self.tape[self.pointer] != char:
                 found = True
@@ -67,6 +68,7 @@ class Tape:
     
     def right_scan_not(self, char):
         found = False
+        self.right()
         for _ in range(self.pointer, len(self.tape)):
             if self.tape[self.pointer] != char:
                 found = True

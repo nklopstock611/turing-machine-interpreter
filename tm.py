@@ -49,9 +49,10 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
             print(tape.read())
 
         elif instruction == 'C':
-            c_filepath = program[pointer + 1]
-            c_program, c_label_tracker, c_label_call_tracker = l.program_array(c_filepath)
-            run(tape, c_program, c_label_tracker, c_label_call_tracker, 0, show_full_tape)
+            if program[pointer - 1] not in {'L', 'R', 'W', 'P', 'S', '?'}:
+                c_filepath = program[pointer + 1]
+                c_program, c_label_tracker, c_label_call_tracker = l.program_array(c_filepath)
+                run(tape, c_program, c_label_tracker, c_label_call_tracker, 0, show_full_tape)
 
         elif instruction == 'TO':
             pointer = label_call_tracker[program[pointer + 1]]
