@@ -162,6 +162,8 @@ def program_array(program_filepath):
                     program.append(line[2])
                     program.append('not_g')
                     token_counter += 1
+                else:
+                    raise SyntaxError(f"Error at line {line_number} - ?'s first param must be a char or an assigned G instruction.")
             else:
                 raise SyntaxError(f"Error at line {line_number} - ?'s first param must be a char or an assigned G instruction.")
 
