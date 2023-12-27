@@ -40,7 +40,7 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
                 tape.right_scan_not(char)
 
         elif instruction == 'W':
-            if program[pointer + 1] == 'G':
+            if program[pointer + 2] == 'G':
                 tape.write(tape.get_g())
             else:
                 tape.write(program[pointer + 1])
@@ -59,11 +59,27 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
         elif instruction == 'S':
             tape.set_g()
 
-        elif instruction == '?':
-            if tape.read() == program[pointer + 1]:
-                pointer = label_tracker[program[pointer + 2]]
+        elif instruction == '?':                
+            if program[pointer + 2] == 'G':
+                if tape.read() == tape.get_g():
+                    pointer = label_tracker[program[pointer + 3]]
+                else:
+                    pointer += 1
+            elif program[pointer + 2] == 'not_char':
+                if tape.read() != program[pointer + 1]:
+                    pointer = label_tracker[program[pointer + 3]]
+                else:
+                    pointer += 1
+            elif program[pointer + 2] == 'not_g':
+                if tape.read() != tape.get_g():
+                    pointer = label_tracker[program[pointer + 3]]
+                else:
+                    pointer += 1
             else:
-                pointer += 1
+                if tape.read() == program[pointer + 1]:
+                    pointer = label_tracker[program[pointer + 3]]
+                else:
+                    pointer += 1
 
         elif instruction == 'HC':
             print(tape.get_pointer())
@@ -98,22 +114,21 @@ if __name__ == '__main__':
     pointer = 0
     tape = Tape(args.tape_size, args.initial_state_char)
 
-    if program_filepath[-3:] != '.tm':
-        raise FileNotFoundError(f"Error: Program file must have the .tm extension")
-    # program_filepath = 'examples/simple-instructions/simple_tm_call.tm'
-
-    program, label_tracker, label_call_tracker = l.program_array(program_filepath)
-
-    if args.string:
-        tape.string_to_evaluate(args.string)
-
-    run(tape, program, label_tracker, label_call_tracker, pointer, args.show_full_tape)
-
-    if args.show_full_tape:
-        print(tape.__str__())
-
     try:
-        print(f"Loading program from {program_filepath}...")
+
+        if program_filepath[-3:] != '.tm':
+            raise FileNotFoundError(f"Error: Program file must have the .tm extension")
+        # program_filepath = 'examples/simple-instructions/simple_tm_call.tm'
+
+        program, label_tracker, label_call_tracker = l.program_array(program_filepath)
+
+        if args.string:
+            tape.string_to_evaluate(args.string)
+
+        run(tape, program, label_tracker, label_call_tracker, pointer, args.show_full_tape)
+
+        if args.show_full_tape:
+            print(tape.__str__())
             
     except SyntaxError as e:
         print(e)

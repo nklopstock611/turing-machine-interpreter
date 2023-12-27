@@ -3,7 +3,7 @@ class Tape:
     def __init__(self, size, char):
         self.tape = [char for _ in range(size)]
         self.pointer = 0
-        self.g = '#'
+        self.g = None
 
     def __str__(self):
         return str(self.tape)
@@ -84,6 +84,6 @@ class Tape:
         self.g = self.tape[self.pointer]
 
     def get_g(self):
-        if self.g == '#':
+        if self.g == None:
             raise NameError(f"Error: G is not set.")
         return self.g

@@ -1,7 +1,7 @@
 HC
 R 4
 HC
-W '$'
+W 'G'
 P
 FT
 HALT

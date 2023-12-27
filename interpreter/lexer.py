@@ -109,11 +109,13 @@ def program_array(program_filepath):
             token_counter += 1
             if line[1] == "'":
                 program.append(line[2:-1])
-                token_counter += 1
+                program.append('char')
+                token_counter += 2
             elif line[1] == 'G':
                 # W G
                 program.append(line[1])
-                token_counter += 1
+                program.append('G')
+                token_counter += 2
             else:
                 raise SyntaxError(f"Error at line {line_number} - W's param must be a char or an assigned G instruction.")
 
@@ -145,13 +147,39 @@ def program_array(program_filepath):
 
             if line[1] == "'" and line[3] == "'":
                 program.append(line[2:3])
+                program.append('char')
+                token_counter += 1
+            elif line[1] == 'G':
+                program.append(line[1])
+                program.append('G')
+                token_counter += 1
+            elif line[1] == '!':
+                if line[2] == "'" and line[4] == "'":
+                    program.append(line[3:4])
+                    program.append('not_char')
+                    token_counter += 1
+                elif line[2] == 'G':
+                    program.append(line[2])
+                    program.append('not_g')
+                    token_counter += 1
             else:
-                raise SyntaxError(f"Error at line {line_number} - ?'s first param must be a char.")
+                raise SyntaxError(f"Error at line {line_number} - ?'s first param must be a char or an assigned G instruction.")
 
-            if line[-1] not in {'.', ',', "'", '"', '(', ')', '[', ']', '{', '}', '?', ':', ';', '*', '/', '+', '-', '=', '<', '>', '!', '&', '|', '^', '%', '@', '#', '~', '`', '$', ' '}:
-                program.append(line[4:])
+            if line[-1] not in {'.', ',', "'", '"', '(', ')', '[', ']', '{', '}', '?', ':', ';', '*', '/', '+', '=', '<', '>', '!', '&', '|', '^', '%', '@', '#', '~', '`', '$', ' '}:
                 token_counter += 3
-                label_call_tracker[line[4:]] = token_counter - 1
+                if line[1] == 'G':
+                    program.append(line[2:])
+                    label_call_tracker[line[2:]] = token_counter - 2
+                elif line[1] == '!':
+                    if line[2] == 'G':
+                        program.append(line[3:])
+                        label_call_tracker[line[3:]] = token_counter - 2
+                    else:
+                        program.append(line[5:])
+                        label_call_tracker[line[5:]] = token_counter - 2
+                else:
+                    program.append(line[4:])
+                    label_call_tracker[line[4:]] = token_counter - 1
             else:
                 raise SyntaxError(f"Error at line {line_number} - ?'s second param can't have special characters.")
 
