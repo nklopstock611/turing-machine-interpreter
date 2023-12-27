@@ -6,10 +6,10 @@ from interpreter.tape import Tape
 import interpreter.lexer as l
 
 def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict, pointer: int, show_full_tape: bool = False):
-    while program[pointer] != 'HALT':
+    while program[pointer] != 'HALT_instruc':
         instruction = program[pointer]
 
-        if instruction == 'L':
+        if instruction == 'L_instruc':
             if program[pointer + 2] == 'times':
                 times = program[pointer + 1]
                 if times.isdigit():
@@ -24,7 +24,7 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
                 char = program[pointer + 1]
                 tape.left_scan_not(char)
 
-        elif instruction == 'R':
+        elif instruction == 'R_instruc':
             if program[pointer + 2] == 'times':
                 times = program[pointer + 1]
                 if times.isdigit():
@@ -39,28 +39,28 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
                 char = program[pointer + 1]
                 tape.right_scan_not(char)
 
-        elif instruction == 'W':
+        elif instruction == 'W_instruc':
             if program[pointer + 2] == 'G':
                 tape.write(tape.get_g())
             else:
                 tape.write(program[pointer + 1])
 
-        elif instruction == 'P':
+        elif instruction == 'P_instruc':
             print(tape.read())
 
-        elif instruction == 'C':
-            if program[pointer - 1] not in {'L', 'R', 'W', 'P', 'S', '?'}:
-                c_filepath = program[pointer + 1]
-                c_program, c_label_tracker, c_label_call_tracker = l.program_array(c_filepath)
-                run(tape, c_program, c_label_tracker, c_label_call_tracker, 0, show_full_tape)
+        elif instruction == 'C_instruc':
+            # if program[pointer - 1] not in {'L', 'R', 'W', 'P', 'S', '?'}:
+            c_filepath = program[pointer + 1]
+            c_program, c_label_tracker, c_label_call_tracker = l.program_array(c_filepath)
+            run(tape, c_program, c_label_tracker, c_label_call_tracker, 0, show_full_tape)
 
-        elif instruction == 'TO':
+        elif instruction == 'TO_instruc':
             pointer = label_call_tracker[program[pointer + 1]]
 
-        elif instruction == 'S':
+        elif instruction == 'S_instruc':
             tape.set_g()
 
-        elif instruction == '?':                
+        elif instruction == '?_instruc':                
             if program[pointer + 2] == 'G':
                 if tape.read() == tape.get_g():
                     pointer = label_tracker[program[pointer + 3]]
@@ -82,13 +82,13 @@ def run(tape: Tape, program: list, label_tracker: dict, label_call_tracker: dict
                 else:
                     pointer += 1
 
-        elif instruction == 'HC':
+        elif instruction == 'HC_instruc':
             print(tape.get_pointer())
 
-        elif instruction == 'FT':
+        elif instruction == 'FT_instruc':
             print(tape.__str__())
             
-        if show_full_tape and instruction in {'L', 'R', 'W'}:
+        if show_full_tape and instruction in {'L_instruc', 'R_instruc', 'W_instruc'}:
             tape.print_ft_on_current_position()
         
         pointer += 1

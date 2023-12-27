@@ -57,7 +57,7 @@ def program_array(program_filepath):
 
         if instruction == 'L' or instruction == 'R':
             # L 2 || R 'A'
-            program.append(instruction)
+            program.append(instruction + '_instruc')
             token_counter += 1
             if len(line) > 1:       
 
@@ -105,7 +105,7 @@ def program_array(program_filepath):
                 elif len(line[2:-1]) != 1:
                     raise SyntaxError(f"Error at line {line_number} - W's param must be a char or an assigned G instruction.")
     
-            program.append(instruction)
+            program.append(instruction + '_instruc')
             token_counter += 1
             if line[1] == "'":
                 program.append(line[2:-1])
@@ -126,14 +126,14 @@ def program_array(program_filepath):
                 if line.count('"') != 2:
                     raise SyntaxError(f"Error at line {line_number} - Seems you forgot a \" on C instruction.")
     
-            program.append(instruction)
+            program.append(instruction + '_instruc')
             token_counter += 1
             program.append(line[2:-1])
             token_counter += 1
 
         elif line[:2] == 'TO':
             # TO label-go-to-x
-            program.append(line[:2])
+            program.append(line[:2] + '_instruc')
 
             if (line[2:] not in label_tracker or line[2:] not in label_call_tracker):
                 raise SyntaxError(f"Error at line {line_number} - Label {line[2:]} not found.")
@@ -143,7 +143,7 @@ def program_array(program_filepath):
 
         elif instruction == '?':
             # ? '$' label-go-to-x
-            program.append(instruction)
+            program.append(instruction + '_instruc')
 
             if line[1] == "'" and line[3] == "'":
                 program.append(line[2:3])
@@ -186,7 +186,7 @@ def program_array(program_filepath):
                 raise SyntaxError(f"Error at line {line_number} - ?'s second param can't have special characters.")
 
         elif line == 'HC' or line == 'P' or line == 'S' or line == 'FT' or line == 'HALT':
-            program.append(line)
+            program.append(line + '_instruc')
             token_counter += 1
             continue
 
