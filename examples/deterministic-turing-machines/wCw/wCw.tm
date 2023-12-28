@@ -1,6 +1,6 @@
 ; Deterministic Turing Machine that recognizes the language of all strings over {x, y, z, C} in the form wCw,
 ; where w is any string containing only x, y, and z. 
-; examples accept: "#xyzCxyz", "#xyCxy", "#C", "#xyCyx"
+; examples accept: "#xyzCxyz", "#xyCxy", "#C", "#zCz"
 ; examples reject: "#xyC", "#xyCyxz", "#xyCxyCxy", "#xyCxyCyx"
 
 ; evaluation starts
